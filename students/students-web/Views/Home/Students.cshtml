@@ -1,15 +1,18 @@
-﻿@{
+﻿@model List<students_web.Controllers.Student>
+@{
     ViewBag.Title = "Home Page";
 }
 
 <style>
-    table{
+    table {
         width: 100%;
     }
-    table, th, td{
+
+    table, th, td {
         border: 1px solid gray;
     }
-    td, th{
+
+    td, th {
         padding: 4px;
     }
 </style>
@@ -27,21 +30,16 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Francesco</td>
-            <td>Basco</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Mario</td>
-            <td>Rossi</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Enrico</td>
-            <td>Verdi</td>
-        </tr>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Name</td>
+                <td>@student.Surname</td>
+            </tr>
+        }
+
+        
     </tbody>
 
 </table>
