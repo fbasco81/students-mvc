@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,37 +13,30 @@ namespace students_web.Controllers
         public ActionResult Students()
         {
             var students = new List<Student>();
-            students.Add(new Student()
+            var cnstr = ConfigurationManager.ConnectionStrings["StudentConnection"].ConnectionString;
+            using (var conn = new SqlConnection(cnstr))
             {
-                Id = 1,
-                Name = "Francesco",
-                Surname = "Basco"
-            });
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText = "SELECT StudentId, FirstName, LastName FROM Student ORDER BY LastName, FirstName";
 
-            students.Add(new Student()
-            {
-                Id = 2,
-                Name = "Mario",
-                Surname = "Rossi"
-            });
+                var reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
-            students.Add(new Student()
-            {
-                Id = 3,
-                Name = "Enrico",
-                Surname = "Verdi"
-            });
+                while (reader.Read())
+                {
+                    students.Add(new Student()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("StudentId")),
+                        Name = reader.GetString(reader.GetOrdinal("Firstname")),
+                        Surname = reader.GetString(reader.GetOrdinal("Firstname")),
+                    });
 
-            students.Add(new Student()
-            {
-                Id = 4,
-                Name = "Gianni",
-                Surname = "Blu"
-            });
+                }
+            }
+            
             return View(students);
         }
-
-        
+ 
     }
 
     public class Student
