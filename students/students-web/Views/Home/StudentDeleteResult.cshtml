@@ -1,0 +1,32 @@
+﻿@model int
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid gray;
+    }
+
+    td, th {
+        padding: 4px;
+    }
+</style>
+
+<div class="jumbotron">
+    <h1>Student Save Result</h1>
+</div>
+
+@if (Model != 1)
+{
+    @:<span>An error occoured while deleting the student<span>
+}
+else
+{
+    @:<span>Student deleted successfully<span>
+    @Html.ActionLink("Click here to return to the list", "Students")
+}

@@ -1,0 +1,51 @@
+﻿@model students_web.Models.Student
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid gray;
+    }
+
+    td, th {
+        padding: 4px;
+    }
+</style>
+
+<div class="jumbotron">
+    <h1>Student Details</h1>
+</div>
+
+@using (Html.BeginForm("SaveStudent", "Home"))
+{ 
+<table>
+    <tbody>
+        <tr>
+            <td>Id</td>
+            <td>@Html.LabelFor(st => st.Id)
+                @Html.HiddenFor(st => st.Id)
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>@Html.TextBoxFor(st => st.Name)</td>
+        </tr>
+        <tr>
+            <td>Surname</td>
+            <td>@Html.TextBoxFor(st => st.Surname)</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Save"  />
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+}

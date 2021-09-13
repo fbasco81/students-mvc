@@ -32,11 +32,18 @@
     <tbody>
         @foreach (var student in Model)
         {
-            <tr>
-                <td>@student.Id</td>
-                <td>@student.Name</td>
-                <td>@student.Surname</td>
-            </tr>
+        <tr>
+            <td>@student.Id</td>
+            <td>@student.Name</td>
+            <td>@student.Surname</td>
+            <td>@Html.ActionLink("Details", "StudentDetail", new { StudentId = student.Id })</td>
+            <td>@using (Html.BeginForm("DeleteStudent", "Home"))
+                {
+                    @Html.Hidden("studentId", student.Id)
+                    <input type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
         }
 
         
