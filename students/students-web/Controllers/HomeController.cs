@@ -24,8 +24,15 @@ namespace students_web.Controllers
         public ActionResult StudentDetail(int studentId)
         {
             var studentService = new StudentService();
-            var students = studentService.GetStudent(studentId);
-            return View(students);
+            var student = studentService.GetStudent(studentId);
+            return View(student);
+        }
+
+        [HttpGet]
+        public ActionResult NewStudent()
+        {
+            var student = new Student() { Id = -1 };
+            return View("StudentDetail", student);
         }
 
         [HttpPost]
