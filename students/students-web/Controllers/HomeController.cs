@@ -1,4 +1,5 @@
-﻿using System;
+﻿using students_web.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -10,9 +11,12 @@ namespace students_web.Controllers
 {
     public class HomeController : Controller
     {
+        List<Student> students = new List<Student>();
+        //List<Student> students = new List<Student>();
+
         public ActionResult Students()
         {
-            var students = new List<Student>();
+            /*var students = new List<Student>();
             var cnstr = ConfigurationManager.ConnectionStrings["StudentConnection"].ConnectionString;
             using (var conn = new SqlConnection(cnstr))
             {
@@ -32,17 +36,50 @@ namespace students_web.Controllers
                     });
 
                 }
-            }
-            
-            return View(students);
+            }*/
+
+
+
+            return View();
         }
- 
+
+        public ActionResult StaticListStudents()
+        {
+
+
+            var student1 = new Student() { Id = 1, Name = "Gambas", Surname = "Edward" };
+            students.Add(student1);
+            var student2 = new Student() { Id = 2, Name = "Velina", Surname = "Angela" };
+            students.Add(student2);
+            var student3 = new Student() { Id = 3, Name = "Canta", Surname = "Tu" };
+            students.Add(student3);
+            var student4 = new Student() { Id = 4, Name = "Ancora", Surname = "Tu" };
+            students.Add(student4);
+            
+
+            return View(students);
+
+        }
+
+        public ActionResult StudentDetails(string surname)
+        {
+            Student student = students.FirstOrDefault(s => s.Surname == surname);
+
+
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(student);
+
+            }
+
+
+        }
+
     }
 
-    public class Student
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-    }
+    
 }
